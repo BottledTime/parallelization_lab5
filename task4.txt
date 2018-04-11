@@ -1,0 +1,7 @@
+var lines = sc.textFile("data_input")
+var links = lines.map(x => (x.split("\t")(0), x.split("\t")(1)))
+var outgoing = links.groupBy(link => link._1).map{case(key, links) => (key, links.map(_._2).toSet.toList)}
+var incoming = links.groupBy(link => link._2).map{case(key, links) => (key, links.map(_._1).toSet.toList)}
+var tmps = incoming.join(outgoing)
+var twoHops = for (tmp <- tmps; x <- tmp._2._1; y <- tmp._2._2) yield (x, y)
+var result = links.union(twoHops)

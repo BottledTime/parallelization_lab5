@@ -1,5 +1,5 @@
 var lines = sc.textFile("data_input")
 var links = lines.map(x => (x.split("\t")(0), x.split("\t")(1)))
-var outgoingNeighbours = links.groupBy(edge => edge._1).map{case(key, edges) => (key, edges.map(_._2).toSet.toList)}
-var incomingNeighbours = links.groupBy(edge => edge._2).map{case(key, edges) => (key, edges.map(_._1).toSet.toList)}
+var outgoingNeighbours = links.groupBy(link => link._1).map{case(key, links) => (key, links.map(_._2).toSet.toList)}
+var incomingNeighbours = links.groupBy(link => link._2).map{case(key, links) => (key, links.map(_._1).toSet.toList)}
 var result = outgoingNeighbours.join(incomingNeighbours).map(x => (x._1, List(x._2._1, x._2._2).flatten.distinct))
