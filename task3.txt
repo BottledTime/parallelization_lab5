@@ -1,0 +1,4 @@
+var sources = sc.textFile("data_input").map(x => x.split("\t")(0))
+var counts = sources.map(source => (source, 1)).reduceByKey(_ + _)
+var largestOutdegree = counts.reduce((x, y) => if(x._2 > y._2) x else y)._2
+var result = counts.filter(_._2 == largestOutdegree).map(x => x._1)
